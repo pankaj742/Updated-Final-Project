@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcom to file upload project</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-firestore.js"></script>
+	<script type="text/javascript">
+		var config = {
+			apiKey: "AIzaSyCtf5dlViJYXWBeoo2yHfTI8vjY2m4wzJI",
+			authDomain: "camera-app-ecf92.firebaseapp.com",
+			databaseURL: "https://camera-app-ecf92.firebaseio.com",
+			projectId: "camera-app-ecf92",
+			storageBucket: "camera-app-ecf92.appspot.com",
+			messagingSenderId: "902166638398"
+		};
+		firebase.initializeApp(config);
+		// firebase.initializeApp({
+		//   apiKey: 'AIzaSyAKLLPqrj6InjiZ3D1OjSmffMamXKBKF0s',
+		//   authDomain: 'pankaj-final-project.firebaseapp.com',
+		//   projectId: 'pankaj-final-project'
+		// });
+		var db = firebase.firestore();
+		function login(){
+			// window.location.href='dashboard.html';
+			var email=document.getElementById("email");
+			var pass=document.getElementById("pass");
+			db.collection("users").where("email","==",email.value)
+			.where("password",'==',pass.value)
+			.get().then(function(queryShot){
+				queryShot.forEach(function(doc){
+					if(doc.exists){
+						sessionStorage.setItem("user",doc.data());
+						window.location.href='dashboard.html';
+					}
+				});
+				console.log("user does not exists");
+				var notification=document.getElementById("not-exists");
+				notification.style.visibility="visible";
+				notification.style.opacity="1";
+			});
+
+		}
+		window.onload=function(){
+			var added=sessionStorage.getItem("added");
+			console.log(added);
+			if(added == "true"){
+				console.log(added);
+				var notification=document.getElementById("notification");
+				notification.style.visibility="visible";
+				notification.style.opacity="1";
+			}else{
+				console.log("in else");
+				var notification=document.getElementById("notification");
+			notification.style.visibility="hidden";
+			notification.style.opacity="0";
+			}
+		};
+
+		window.onunload=function(){
+			sessionStorage.clear();
+		};
+
+		function hideNotification(){
+			console.log("in hide");
+			var notification=document.getElementById("notification");
+				notification.style.visibility="hidden";
+				notification.style.opacity="0";
+		}
+		function notHideNotification(){
+			console.log("in hide");
+			var notification=document.getElementById("not-exists");
+				notification.style.visibility="hidden";
+				notification.style.opacity="0";
+		}
+		
+	</script>
+</head>
+<body id="login-page">
+	<h1 id="login-header">Login to access the features</h1>
+	<div id="login-form">
+		<form>
+		<!-- <label>user name</label> -->
+		<input type="email" id="email" placeholder="enter email" required autocomplete="on"><br>
+		<!-- <label>password</label> -->
+		<input type="password" id="pass" placeholder="enter password" required autocomplete="off"><br>
+		<!-- <label>email</label> -->
+		<!-- <label>phone no</label> -->
+		<input type="button" name="_login" onclick="login()" value="login" />
+		<a href="create_account.html">don't have account create new one</a>
+	</form>
+	</div>
+	<div id="notification">
+		<span id="msg">document added succesfully</span>
+		<button id="notification-btn" onclick="hideNotification()">ok</button>
+	</div>
+	<div id="not-exists">
+		<span id="not-msg">user does not exists</span>
+		<button id="not-btn" onclick="notHideNotification()">ok</button>
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+    <title>Message interface</title>
+    <link rel="stylesheet" type="text/css" href="message.css">
+    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-storage.js"></script>
+</head>
+<body>
+    <h1>Welcom user to this epic message dashboard</h1>
+    <div class="leftSide">
+        <label class="usersHeader">Users</label>
+        <hr>
+        <div id="userList">
+
+        </div>
+    </div>
+    <div class="rightSide">
+        <div id="msgList" class="msgList">
+        </div>
+        <input id="msgbox" class="msgbox" type="text" autofocus onkeypress="routeEnter(event)"></input>
+        <img class="sendButton" src="send.png" onclick="sendMessage()">
+                <!-- <img id="send" src="send.png"/> -->
+        </div>
+    </div>
+    <script src="message.js"></script>
+</body>
+</html>

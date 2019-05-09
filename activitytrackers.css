@@ -1,0 +1,122 @@
+*{
+    margin:0;
+    padding: 0;
+    font-family:  sans-serif;
+  }
+  .navbar{
+    position: fixed;
+    background: linear-gradient(45deg,#e2295f 30%,#6710b2 );
+    height:70px;
+    width:100%;
+    box-sizing: border-box;
+    color: #fff;
+    box-shadow: 10px 5px 5px black;
+    z-index: 5;
+    
+  
+    
+    
+  }
+  .sidebar{
+   position: fixed;
+    height: 1000px;
+    margin-top: 70px;
+    width: 240px;
+    background: #272c33;
+  }
+  h2{
+    padding-top: 15px;
+    margin-left: 30px;
+    font-weight: 400;
+  
+  }
+  .name{
+    width:100%;
+    background:linear-gradient(to top,#272c33 90% ,#111);
+    height: 100px;
+  }
+  .main{
+   width:1109px;
+    position: absolute;
+    margin-left: 240px;
+      height:900px;
+      margin-top: 70px;
+      
+     overflow: none;
+      background: #263238;
+      background:linear-gradient(to top,#383f48 90% ,#111);
+  }
+  .admin a{
+    margin: 0px 20px 0px 20px;
+    display: block;
+    padding: 10px 14px 10px 14px;
+    text-decoration: none;
+    color: rgb(223, 206, 206);
+    font-size: 18px;
+   
+  }
+  .admin a:hover{
+    background-color: #e2295f;
+    color: #fff;
+    font-size: 19px;
+  }
+  .admin{
+    background: #263238;
+  }
+  .admin i{
+    padding: 5px;
+    border: 2px solid #fff;
+    margin-right: 10px;
+    font-size: 15px;
+    border-radius: 50%;
+  }
+  .admin div a {
+    background: #e2295f;
+    margin-top:20px;
+  }
+  .navbar i{
+    padding: 5px;
+    margin-right: 10px;
+    border: 2px solid #fff;
+    border-radius: 45%;
+  }
+  .main div h2{
+    margin-left: 0px;
+    background: #1f2225;
+    padding: 20px;
+    color: #e2295f;
+  }
+
+  #activityDiv{
+    border: 2px solid grey;
+    height: 400px;
+    width: 400px;
+    overflow: scroll;
+  }
+  #row1{
+    border: 1px solid grey;
+    /* width: 300px; */
+    max-width: 300px;
+    min-height: 50px;
+    border-radius: 20px;
+    background-color: snow;
+    margin-top: 6px;
+    margin-left: 6px;
+    display: block;
+    padding: 8px;
+    overflow: scroll;
+  }
+  #row1:focus{
+    border:2px solid green;
+    background-color: burlywood;
+    outline: 0px;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 2px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: rgb(29, 163, 216);
+}

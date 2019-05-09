@@ -1,0 +1,150 @@
+.leftSide{
+    width: 300px;
+    height: 500px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    display: inline-block;
+}
+.rightSide{
+    width: 700px;
+    height: 500px;
+    border: 2px solid grey;
+    border-radius: 30px;
+    position: absolute;
+    display: inline-block;
+    left: 320px;
+    top: 80px;
+}
+.msgbox{
+    width: 500px;
+    height: 50px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    display: inline-block;
+    position: absolute;
+    top: 420px;
+    left: 10px;
+    font-size: 30px;
+    font-style: italic;
+    font-family: 'Courier New', Courier, monospace;
+}
+.sendButton{
+    position: absolute;
+    display: inline-block;
+    top: 395px;
+    left: 530px;
+    width: 100px;
+    height: 100px;
+    /* border: 2px solid grey;
+    border-radius: 20px; */
+}
+.sendButton:hover{
+    top: 375px;
+    left: 510px;
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+
+}
+.usersHeader{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 40px;
+    font-style: italic;
+    margin-left: 80px;
+    display: block;
+}
+.msgList{
+    width: 674px;
+    height: 372px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    margin: 10px 10px 0px 10px;
+    overflow: auto;
+}
+.msgElement{
+    border: 1px solid grey;
+    border-radius: 20px;
+    min-height: 34px;
+    max-width: 283px;
+    text-align: -webkit-center;
+    width: 283px;
+    /* margin-right: 1px; */
+    padding-top: 21px;
+    display: inline-block;
+    margin-left: 381px;
+    margin-top: 10px;
+    position: static;
+    background-color: lightblue;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: break-word;
+    /* overflow:auto; */
+}
+.msgElement:focus{
+    background-color: crimson;
+}
+.msgFromSeller{
+    border: 1px solid grey;
+    border-radius: 20px;
+    min-height: 34px;
+    max-width: 283px;
+    text-align: -webkit-center;
+    width: 283px; 
+    /* margin-right: 1px; */
+    padding-top: 21px;
+    display: inline-block;
+    margin-right: 67px;
+    margin-left: 8px;
+    margin-top: 10px;
+    position: static;
+    background-color: lightgreen;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: break-word;
+    /* overflow: auto; */
+}
+.msgFromSeller:focus{
+    
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 2px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: rgb(29, 163, 216);
+}
+
+#userList{
+    overflow-y: scroll;
+    width: inherit;
+    height: 400px;
+    
+}
+#userId{
+    border: 2px solid grey;
+    height: 65px;
+    border-radius: 30px;
+    font-size: 29px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    margin-top: 8px;
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-top: 17px;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    background-color: beige;
+    outline: 0px;
+    /* overflow: scroll; */
+}
+#userId:hover{
+    background-color: lavender;
+    cursor: pointer;
+}
+#userId:focus{
+    background-color: rgb(59, 172, 119);
+    cursor: pointer;
+}

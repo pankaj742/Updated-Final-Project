@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-storage.js"></script>
+    <script src="statictics.js"></script>
+
+</head>
+
+<body id="body">
+    <div class="navbar">
+        <h2><i class="fas fa-code"></i>Googsky</h2>
+        <a href=""><i class="fas fa-bell"></i></a>
+        <a href=""><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <div class="main">
+        <div>
+            <h2>Dashboard</h2>
+        </div>
+
+        <script src="jquery.counterup.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+        <script>
+            jQuery(document).ready(function($) {
+                $('.counter').counterUp({
+                    delay: 10,
+                    time: 2000
+                });
+            });
+        </script>
+
+        <div class="flex">
+
+            <div class="f1">
+                <h1><i class="fas fa-chart-line"></i></h1>
+                <p class="counter">60000</p>
+                <p class="n1">Total Number of
+                    <br> Images</p>
+            </div>
+
+            <div class="f1">
+                <h1><i class="fas fa-coins"></i></h1>
+                <p class="counter">40</p>
+                <p class="n1">Total Number of
+                    <br> Models</p>
+            </div>
+
+            <div class="f1">
+                <h1><i class="fas fa-cloud"></i></h1>
+                <p class="counter">120</p>
+                <p class="n1">Period of training in
+                    <br>hours</p>
+            </div>
+
+            <div class="f1">
+                <h1>
+                  <i class="fas fa-cubes"></i>
+               </h1>
+                <p class="counter">200</p>
+                <p class="n1">Total number of
+                    <br>Classes </p>
+            </div>
+
+        </div>
+        <div class="image">
+            Image Classification
+        </div>
+
+        <div class="progress progress-bar progress-bar-striped progress-bar-animated mb-2">Loading Model</div>
+        <div class="model">
+
+            <div class="menu">
+                <select id="model-selector">
+                    <option selected enabled class="opt">Select Model </option>
+                    <option class="">HKMODEL</option>
+                </select>
+
+                <div>
+                    <input id="image-selector" type="file">
+                </div>
+
+                <div>
+                    <button id="predict-button" class="load">Predict</button>
+                </div>
+
+            </div>
+
+            <!--  Image Selector  -->
+            <div class="frame1">
+
+                <img id="selected-image" src="" alt="Image" height="400" width="300" crossorigin="anonymous">
+
+            </div>
+            <div class="mychart">
+                <canvas id="myChart"></canvas>
+
+            </div>
+            <div class="mychart1">
+                <canvas id="myChart1"></canvas>
+
+            </div>
+
+            <!--  Results  -->
+            <div class="image1">
+                Results
+            </div>
+
+            <div class="results">
+
+                <div class="result1">
+                        <ol id="prediction-list"></ol>
+                        <ul id="hkresult1"></ul>
+                        <ul id="hkresult2"></ul>
+                        <ul id="hkresult3"></ul>
+                        <ul id="hkresult4"></ul>
+
+                        <div class="mychart2">
+                                <canvas id="myChart2"></canvas>
+                                <button onclick="updateChart()" >Update</button>
+                            </div> 
+                 
+                </div>
+
+                <div class="result2">
+                        <ol id="result1"></ol>
+                        <ul id="hkresult5"></ul>
+                        <ul id="hkresult6"></ul>
+                        <ul id="hkresult7"></ul>
+                        <ul id="hkresult8"></ul>
+                        <ul id="hkresult9"></ul>
+
+                        <div class="mychart3">
+                                <canvas id="myChart3"></canvas>
+                                <button onclick="updateChart1()">Update</button>
+                            </div> 
+
+                </div>
+                <div class="result3">
+                        <ol id="result2"></ol>
+
+                        <ul id="hkresult10"></ul>
+                        <ul id="hkresult11"></ul>
+                        <ul id="hkresult12"></ul>
+                        <ul id="hkresult13"></ul>
+                        <ul id="hkresult14"></ul>
+                        <div class="mychart4">
+                            <canvas id="myChart4"></canvas>
+                            <button onclick="updateChart2()">Update</button>
+                        </div> 
+                </div>
+                <div class="result4">
+                        <ol id="result3"></ol>
+
+                        <ul id="hkresult15"></ul>
+                        <ul id="hkresult16"></ul>
+                        <ul id="hkresult17"></ul>
+                        <ul id="hkresult18"></ul>
+                        <ul id="hkresult19"></ul>
+                        <div class="mychart5">
+                            <canvas id="myChart5"></canvas>
+                            <button onclick="updateChart3()">Update</button>
+                        </div> 
+
+                </div>
+
+                <div class="result5">
+                        <ol id="result4"></ol>
+
+                        <ul id="hkresult20"></ul>
+                        <ul id="hkresult21"></ul>
+                        <ul id="hkresult22"></ul>
+                        <ul id="hkresult23"></ul>
+                        <ul id="hkresult24"></ul>
+                        <div class="mychart6">
+                            <canvas id="myChart6"></canvas>
+                            <button onclick="updateChart4()">Update</button>
+                        </div> 
+
+                </div>
+                <div class="result6">
+                        <ol id="result5"></ol>
+                        <ul id="hkresult25"></ul>
+                        <ul id="hkresult26"></ul>
+                        <ul id="hkresult27"></ul>
+                        <ul id="hkresult28"></ul>
+                        <ul id="hkresult29"></ul>
+                        <div class="mychart7">
+                            <canvas id="myChart7"></canvas>
+                            <button onclick="updateChart5()">Update</button>
+                        </div> 
+
+                </div>
+
+        
+             
+
+            </div>
+
+            
+           <!--  <div class="mychart2">
+                <canvas id="myChart2"></canvas>
+                <button onclick="updateChart()">Update</button>
+            </div> -->
+
+            <script>
+                var ctx = document.getElementById('myChart').getContext('2d');
+
+                var chart = new Chart(ctx, {
+
+                    type: 'line',
+
+                    data: {
+                        labels: ['T-shirt', 'Jeans', 'Shirt', 'Shoes'],
+                        datasets: [{
+                            label: 'My First dataset',
+                            backgroundColor: [
+
+                                '#900c3f'
+                            ],
+
+                            data: [0.7, 0.3, 0.5, 0.5]
+                        }]
+                    },
+
+                    options: {}
+                });
+
+              
+                ;
+            </script>
+                   <script>
+                    var ctx = document.getElementById('myChart1').getContext('2d');
+                    Chart.defaults.global.defaultFontColor = '#fff';
+                    var chart = new Chart(ctx, {
+    
+                        type: 'bar',
+    
+                        data: {
+                            labels: ['5-Epochs', '10-Epochs', '15-Epochs', '20-Epochs', '25-epoches'],
+                            datasets: [{
+                                label: 'Training Accuracy',
+                                backgroundColor: [
+                                    '#581845',
+                                    '#900c3f',
+                                    '#c70039',
+                                    '#ff5733',
+                                    '#ffc30f'
+    
+                                ],
+    
+                                data: [0.3, 0.45, 0.54, 0.67, 0.78, ]
+                            }]
+                        },
+    
+                        options: {
+                            layout: {
+                                padding: {
+                                    left: 30,
+                                    right: 30,
+                                    top: 20,
+                                    bottom: 20
+                                }
+                            }
+                        }
+                    });
+    
+                 
+                </script>
+    
+                 <script>
+                    var ctx1 = document.getElementById('myChart2').getContext('2d');
+                    Chart.defaults.global.defaultFontColor = '#fff';
+                    var chart1 = new Chart(ctx1, {
+    
+                        type: 'doughnut',
+    
+                        data: {
+                            labels: ['Jeans', 'Shirt', 'Shoes', 'T-Shirt'],
+                            datasets: [{
+                                label: 'Training Accuracy',
+                                backgroundColor: [
+                                    '#e2295f',
+                                    '#00acc1',
+                                    'yellow',
+                                    '#6710b2'
+    
+                                ],
+    
+                                data: [0.3, 0.45, 0.67, 0.78]
+                            }]
+                        },
+    
+                        options: {
+                            layout: {
+                                padding: {
+                                    left: 10,
+                                    right: 10,
+                                    top: 20,
+                                    bottom: 0
+                                }
+                            }
+                        }
+                    });
+    
+                    function updateChart() {
+                        const prediction1 = document.getElementById("hkresult1").value;
+                        const prediction2 = document.getElementById("hkresult2").value;
+                        const prediction3 = document.getElementById("hkresult3").value;
+                        const prediction4 = document.getElementById("hkresult4").value;
+    
+                        chart1.data.datasets[0].data = [prediction1, prediction2, prediction3, prediction4];
+                        chart1.update();
+    
+                    };
+                </script>  
+
+
+
+
+
+
+        <!-- jeans model prediction -->
+
+
+
+
+
+
+                   <script>
+                var ctx3 = document.getElementById('myChart3').getContext('2d');
+                Chart.defaults.global.defaultFontColor = '#fff';
+                var chart3 = new Chart(ctx3, {
+
+                    type: 'line',
+
+                    data: {
+                         labels: ['Jogger-fit', 'regular-fit', 'skinny', 'slim' ,'tapered-fit'], 
+                        datasets: [{
+                            label: 'Training Accuracy',
+                            backgroundColor: [
+                                '#00acc1',
+                               
+
+                            ],
+ 
+                            data: [0.3, 0.45, 0.67, 0.78 ,0.94]
+                        }]
+                    },
+
+                    options: {
+                        layout: {
+                            padding: {
+                                left: 10,
+                                right: 10,
+                                top: 20,
+                                bottom: 0
+                            }
+                        }
+                    }
+                });
+
+                function updateChart1() {
+                    const prediction1 = document.getElementById("hkresult5").value;
+                    const prediction2 = document.getElementById("hkresult6").value;
+                    const prediction3 = document.getElementById("hkresult7").value;
+                    const prediction4 = document.getElementById("hkresult8").value;
+                    const prediction5 = document.getElementById("hkresult9").value;
+
+                    chart3.data.datasets[0].data = [prediction1, prediction2, prediction3, prediction4, prediction5];
+                    chart3.update();
+
+                };
+            </script> 
+
+
+
+
+
+
+
+
+
+                <script>
+                    var ctx4 = document.getElementById('myChart4').getContext('2d');
+                    Chart.defaults.global.defaultFontColor = '#fff';
+                    var chart4 = new Chart(ctx4, {
+    
+                        type: 'bar',
+    
+                        data: {
+                            labels: ['Jogger-fit', 'regular-fit', 'skinny'],
+                            datasets: [{
+                                label: 'Training Accuracy',
+                                backgroundColor: [
+                                    '#e2295f',
+                                    '#00acc1',
+                                    'yellow'
+                                   
+    
+                                ],
+    
+                                data: [ 0.67, 0.78 ,0.94]
+                            }]
+                        },
+    
+                        options: {
+                            layout: {
+                                padding: {
+                                    left: 10,
+                                    right: 10,
+                                    top: 20,
+                                    bottom: 0
+                                }
+                            }
+                        }
+                    });
+    
+                    function updateChart2() {
+                        const prediction1 = document.getElementById("hkresult10").value;
+                        const prediction2 = document.getElementById("hkresult11").value;
+                        const prediction3 = document.getElementById("hkresult12").value;
+                   /*      const prediction4 = document.getElementById("hkresult13").value;
+                        const prediction5 = document.getElementById("hkresult14").value; */
+    
+                        chart4.data.datasets[0].data = [prediction1, prediction2, prediction3];
+                        chart4.update();
+    
+                    };
+                </script> 
+
+
+
+
+
+
+                <script>
+                    var ctx5 = document.getElementById('myChart5').getContext('2d');
+                    Chart.defaults.global.defaultFontColor = '#fff';
+                    var chart5 = new Chart(ctx5, {
+
+                        type: 'doughnut',
+
+                        data: {
+                            labels: [ 'skinny', 'slim' ,'tapered-fit'],
+                            datasets: [{
+                                label: 'Training Accuracy',
+                                backgroundColor: [
+                                   
+                                    'yellow',
+                                    '#6710b2',
+                                    'blue'
+
+                                ],
+
+                                data: [ 0.67, 0.78 ,0.94]
+                            }]
+                        },
+
+                        options: {
+                            layout: {
+                                padding: {
+                                    left: 10,
+                                    right: 10,
+                                    top: 20,
+                                    bottom: 0
+                                }
+                            }
+                        }
+                    });
+
+                    function updateChart3() {
+                        const prediction1 = document.getElementById("hkresult15").value;
+                        const prediction2 = document.getElementById("hkresult16").value;
+                        const prediction3 = document.getElementById("hkresult17").value;
+                       /*  const prediction4 = document.getElementById("hkresult18").value;
+                        const prediction5 = document.getElementById("hkresult19").value; */
+
+                        chart5.data.datasets[0].data = [prediction1, prediction2, prediction3];
+                        chart5.update();
+
+                    };
+                </script> 
+
+
+
+
+
+                <script>
+                    var ctx6 = document.getElementById('myChart6').getContext('2d');
+                    Chart.defaults.global.defaultFontColor = '#fff';
+                    var chart6 = new Chart(ctx6, {
+
+                        type: 'doughnut',
+
+                        data: {
+                            labels: ['Jogger-fit', 'regular-fit', 'skinny', 'slim' ,'tapered-fit'],
+                            datasets: [{
+                                label: 'Training Accuracy',
+                                backgroundColor: [
+                                    '#e2295f',
+                                    '#00acc1',
+                                    'yellow',
+                                    '#6710b2',
+                                    'blue'
+
+                                ],
+
+                                data: [0.3, 0.45, 0.67, 0.78 ,0.94]
+                            }]
+                        },
+
+                        options: {
+                            layout: {
+                                padding: {
+                                    left: 10,
+                                    right: 10,
+                                    top: 20,
+                                    bottom: 0
+                                }
+                            }
+                        }
+                    });
+
+                    function updateChart4() {
+                        const prediction1 = document.getElementById("hkresult20").value;
+                        const prediction2 = document.getElementById("hkresult21").value;
+                        const prediction3 = document.getElementById("hkresult22").value;
+                        const prediction4 = document.getElementById("hkresult23").value;
+                        const prediction5 = document.getElementById("hkresult24").value;
+
+                        chart6.data.datasets[0].data = [prediction1, prediction2, prediction3, prediction4, prediction5];
+                        chart6.update();
+
+                    };
+                </script>  
+
+                <h1 id="shoes">
+                    
+                </h1>
+ 
+
+ 
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.2/dist/tf.min.js"></script>
+            <script src="class.js"></script>
+            <script src="predict.js"></script>
+
+        </div>
+
+    </div>
+
+    <!--  Side Navigation panel  -->
+
+    <div class="sidebar">
+        <div class="name">
+        </div>
+
+        <div class="admin">
+            <a href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+          
+            <a href="activitytrackers.html"><i class="fab fa-google-drive"></i>Activity Tracker</a>
+            <a href="public/view_images.html"><i class="fas fa-images"></i>Gallery</a>
+            <a href="public/message.html"><i class="fas fa-comment-dots"></i>Chat</a>
+            <a href="statistics.html"><i class="fas fa-comment-dots"></i>Statistics</a>
+            <a href="settings.html"><i class="fas fa-cog"></i>Settings</a>
+
+            <div>
+                <a href=""><i class="fas fa-power-off"></i>Logout</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

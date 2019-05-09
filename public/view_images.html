@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>View Images</title>
+	<link rel="stylesheet" type="text/css" href="view_images.css">
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-storage.js"></script>
+</head>
+<body id="body">
+	<h1>Hey you are watching the images</h1>
+	<div id="notification" class="newNotification" onclick="openNotification()">
+		<div id="number"><span id="no_value">0</span></div>
+		<div id="full_notification"></div>
+	</div>
+	<div id="message" onclick="viewMessage()">
+		<img class="messageIcon" src="message-icon.png"/>
+		<div id="messageNo">
+
+		</div>
+	</div>
+	<div id="big_container">
+		<!-- <div id="container">hi</div> -->
+		<!-- <div id="navigation">navigation</div> -->
+	</div>
+	<script type="text/javascript" src="view_image.js"></script>
+</body>
+</html>

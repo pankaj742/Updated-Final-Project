@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	<link rel="stylesheet" type="text/css" href="dashboard.css">
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-storage.js"></script>
+	<script type="text/javascript">
+		var config = {
+			apiKey: "AIzaSyCtf5dlViJYXWBeoo2yHfTI8vjY2m4wzJI",
+			authDomain: "camera-app-ecf92.firebaseapp.com",
+			databaseURL: "https://camera-app-ecf92.firebaseio.com",
+			projectId: "camera-app-ecf92",
+			storageBucket: "camera-app-ecf92.appspot.com",
+			messagingSenderId: "902166638398"
+		};
+		firebase.initializeApp(config);
+	// 	firebase.initializeApp({
+	//   apiKey: 'AIzaSyAKLLPqrj6InjiZ3D1OjSmffMamXKBKF0s',
+	//   authDomain: 'pankaj-final-project.firebaseapp.com',
+	//   // databaseURL: '<your-database-url>',
+  //     storageBucket: 'gs://pankaj-final-project.appspot.com',
+	//   projectId: 'pankaj-final-project'
+	// });
+		function loadImage(){
+		image=document.getElementById("img");
+		var file    = document.querySelector('input[type=file]').files[0];
+		reader=new FileReader();
+		console.log(file);
+		reader.readAsDataURL(file);
+		reader.addEventListener("load",function(){
+			image.src=reader.result;
+		})
+		
+	}
+	function selectFile(){
+		btn=document.getElementById("file-id");
+		btn.click();
+	}
+	function uploadTask(){
+		// File or Blob named mountains.jpg
+		var file = document.querySelector('input[type=file]').files[0];
+		var body= document.getElementById("body");
+		var storageRef = firebase.storage().ref();
+		var db=firebase.firestore();
+		// Create the file metadata
+		var metadata = {
+		  contentType: 'image/jpeg'
+		};
+
+		var progressBar=document.createElement("progress");
+		var text=document.createTextNode("uploading");
+		progressBar.appendChild(text);
+		progressBar.style.border="2px solid black";
+		progressBar.max=100.0;
+		progressBar.style.position="fixed";
+		progressBar.style.top="100px";
+		progressBar.style.left="500px";
+		progressBar.style.width="400px";
+		progressBar.style.height="100px";
+		body.appendChild(progressBar);
+		// Upload file and metadata to the object 'images/mountains.jpg'
+		// var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
+		var uploadTask = storageRef.child( file.name).put(file, metadata);
+
+
+		// Listen for state changes, errors, and completion of the upload.
+		uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+		  function(snapshot) {
+		    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+		    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+		    console.log('Upload is ' + progress + '% done');
+		    progressBar.value=progress;
+		    switch (snapshot.state) {
+		      case firebase.storage.TaskState.PAUSED: // or 'paused'
+		        console.log('Upload is paused');
+		        break;
+		      case firebase.storage.TaskState.RUNNING: // or 'running'
+		        console.log('Upload is running');
+		        break;
+		    }
+		  }, function(error) {
+
+		  // A full list of error codes is available at
+		  // https://firebase.google.com/docs/storage/web/handle-errors
+		  switch (error.code) {
+		    case 'storage/unauthorized':
+		      // User doesn't have permission to access the object
+		      break;
+
+		    case 'storage/canceled':
+		      // User canceled the upload
+		      break;
+
+		    case 'storage/unknown':
+		      // Unknown error occurred, inspect error.serverResponse
+		      break;
+		  }
+		}, function() {
+		  // Upload completed successfully, now we can get the download URL
+		  uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+		    alert("Image uploaded sucessfully");
+		    db.collection("image").add({
+					tag: "image",
+					id : uploadTask.snapshot.ref.location.path,
+					url: downloadURL
+				});
+				db.collection("activity").add({
+					"info":"image uploaded for classification time:"+new Date(),
+					"timestamp":new Date()
+				});
+				console.log(uploadTask.snapshot.ref.location.path);
+		    progressBar.style.display="none";
+		    document.getElementById("img").src="img-succ.png";
+		  });
+		});
+	}
+	function viewImages(){
+		window.location="view_images.html";
+	}
+	</script>
+</head>
+<body >
+	<h1>Welcom to dashboard</h1>
+	<span id="body">
+		<div id="side-panel">
+		<div id="file" onclick="selectFile()">
+			<label id="file-label">select Image</label>
+			<input type="file" id="file-id" value="select file" id="file" onchange="loadImage()">
+		</div>
+		<div id="div-img">
+				<img id="img"  src="img-temp.png" />
+		</div>
+		<div id="upload-btn-div">
+			<button id="upload-btn" onclick="uploadTask()">upload</button>
+		</div>
+	</div>
+	</span>
+	<button onclick="viewImages()" id="viewImage">View Images</button>
+	
+</body>
+	
+</html>

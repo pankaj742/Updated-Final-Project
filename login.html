@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SignUp and Login</title>
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <link rel="stylesheet" href="login.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-firestore.js"></script>
+</head>
+<body>
+<div id="notification">
+	<label id="notlabel">succesfull</label>
+	<button id="notificationbtn">ok</button>
+</div>
+<div class="container" id="container">
+<div class="form-container sign-up-container">
+
+<form action="">
+	<h1>Create Account</h1>
+	<div class="social-container">
+		<a href="#" class="social"><i class="fa fa-facebook"></i></a>
+		<a href="#" class="social"><i class="fa fa-google"></i></a>
+		<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
+	</div>
+	<span>or use your email for registration</span>
+	<input id="uname" type="text" name="name" placeholder="Name">
+	<input id="email" type="email" name="email" placeholder="Email">
+	<input id="pass" type="password" name="password" placeholder="Password">
+	<button type="button" onclick="return addData()">SignUp</button>
+</form>
+</div>
+<div class="form-container sign-in-container">
+	<form action="#">
+		<h1>Sign In</h1>
+		<div class="social-container">
+		<a href="#" class="social"><i class="fa fa-facebook"></i></a>
+		<a href="#" class="social"><i class="fa fa-google"></i></a>
+		<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
+	</div>
+	<span>or use your account</span>
+	<input id="_email" type="email" name="email" placeholder="Email">
+	<input id="_pass" type="password" name="password" placeholder="Password">
+	<a href="#">Forgot Your Password</a>
+
+	<button type="button" onclick="return login()">Sign In</button>
+	</form>
+</div>
+<div class="overlay-container">
+	<div class="overlay">
+		<div class="overlay-panel overlay-left">
+			<h1>Welcome Back!</h1>
+			<p>To keep connected with us please login with your personal info</p>
+			<button class="ghost" id="signIn">Sign In</button>
+		</div>
+		<div class="overlay-panel overlay-right">
+			<h1>Googsky</h1>
+            <p>Enter your details and start journey with us</p>
+            
+			<button class="ghost" id="signUp">Sign Up</button>
+		</div>
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+var config = {
+    apiKey: "AIzaSyCtf5dlViJYXWBeoo2yHfTI8vjY2m4wzJI",
+    authDomain: "camera-app-ecf92.firebaseapp.com",
+    databaseURL: "https://camera-app-ecf92.firebaseio.com",
+    projectId: "camera-app-ecf92",
+    storageBucket: "camera-app-ecf92.appspot.com",
+    messagingSenderId: "902166638398"
+  };
+  firebase.initializeApp(config);
+// firebase.initializeApp({
+// 	  apiKey: 'AIzaSyAKLLPqrj6InjiZ3D1OjSmffMamXKBKF0s',
+// 	  authDomain: 'pankaj-final-project.firebaseapp.com',
+// 	  projectId: 'pankaj-final-project'
+// 	});
+var db = firebase.firestore();
+
+function showNotification(msg,type){
+	var notification=document.getElementById("notification");
+	var msglabel=document.getElementById("notlabel");
+	var btn=document.getElementById("notificationbtn");
+	btn.onclick=function(){
+		notification.style.display="none";
+	}
+	if(type=="success"){
+		notification.style.display="block";
+		notification.style.backgroundColor="green";
+		msglabel.innerHTML=msg;
+	}else{
+		notification.style.display="block";
+		notification.style.backgroundColor="red";
+		msglabel.innerHTML=msg;
+	}
+}
+
+var addData=function(){
+
+	console.log("in the add function");
+	var userName=document.getElementById("uname");
+	var password=document.getElementById("pass");
+	var email=document.getElementById("email");
+	// var phoneNo=document.getElementById("phoneNo");
+	
+	//console.log("db:"+db.toSource());
+	db.collection("users").add({
+	    "userName": userName.value,
+	    "password": password.value,
+	    "email": email.value,
+	    // "phoneNo": phoneNo.value
+	})
+	.then(function(docRef) {
+	    console.log("Document written with ID: ", docRef.id+"sign up succesfull");
+	    sessionStorage.setItem("added","true");
+		showNotification("account created successfully","success");
+		// window.location.href="index.html";
+
+	})
+	.catch(function(error) {
+	    console.error("Error adding document: ", error);
+		showNotification("failed","failed");
+
+	});
+	
+	
+}
+let flag=0;
+function login(){
+			// window.location.href='dashboard.html';
+			var email=document.getElementById("_email");
+			var pass=document.getElementById("_pass");
+			db.collection("users").where("email","==",email.value)
+			.where("password",'==',pass.value)
+			.get().then(function(queryShot){
+				queryShot.forEach(function(doc){
+					console.log(doc);
+					if(doc.exists){
+						sessionStorage.setItem("user",doc.data());
+						showNotification("login sucessfull","success");
+						window.location.href='index.html';
+					}else{
+						flag=1;
+						console.log("user does not exists");
+						showNotification("not exists","failed");
+					}
+				});
+				console.log("after queryshot");
+				if(flag==0){
+					console.log("user does not exists");
+						showNotification("user does not exists","failed");
+				}
+			});
+			
+
+		}
+
+	const signUpButton = document.getElementById('signUp');
+	const signInButton = document.getElementById('signIn');
+	const container = document.getElementById('container');
+
+	signUpButton.addEventListener('click', () => {
+		container.classList.add("right-panel-active");
+	});
+	signInButton.addEventListener('click', () => {
+		container.classList.remove("right-panel-active");
+	});
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>login page</title>
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-firestore.js"></script>
+	<script type="text/javascript" src="signup.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body id="create-account-page">
+<h1 name='create-header'>create new account</h1>
+<div id="form">
+	<form>
+	<!-- <label>user name</label> -->
+	<input type="text" id="uname" placeholder="enter user name"><br>
+	<!-- <label>password</label> -->
+	<input type="password" id="pass" placeholder="enter password"><br>
+	<!-- <label>email</label> -->
+	<input type="email" id="email" placeholder="enter email"><br>
+	<!-- <label>phone no</label> -->
+	<input type="numeric" id="phoneNo" placeholder="enter phone no"><br>
+	<input type="button" name="" value="create account" onclick="addData()" />
+</form>
+</div>
+</body>
+</html>

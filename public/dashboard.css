@@ -1,0 +1,87 @@
+body{
+	background-color: rgb(235, 54, 108);
+}
+#main-screen{
+	width: 100%;
+	height: 80%;
+}
+#img{
+	/*border: 3px solid blue;
+	border-radius: 20px;*/
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+#file{
+	border: 1px solid green;
+	border-radius: 20px;
+	width: 100px;
+	height: 50px;
+	left: 40%;
+	/*padding: 10px;*/
+	background-color: yellow;
+	position: relative;
+}
+#file:hover{
+	background-color: #a6ea1e;
+}
+#file-label{
+	position: relative;
+	top: 8px;
+	left: 8px;
+	font-size: 17px;
+}
+#file-id{
+	display: none;
+}
+#side-panel{
+	background-color: #ccff5e;
+	width: 400px;
+	height: 600px;
+	border: 2px solid blue;
+	border-radius: 20px;
+	display: inline-block;
+}
+#div-img{
+	width: 99%;
+	height: 70%;
+	border: 1px solid yellow;
+}
+#upload-btn-div{
+	width: 100%;
+	height: 20%;
+	background-color: #69f487;
+}
+#upload-btn{
+	position: relative;
+	top: 15%;
+	left: 10%;
+	width: 80%;
+	height: 70%;
+	border-radius: 10px;
+	background-color: #7fcc41;
+	border: 1px solid black;
+}
+#upload-btn:hover{
+	background-color: skyblue;
+}
+#viewImage{
+	width: 200px;
+	height: 100px;
+	position: absolute;
+	top: 400px;
+	left: 600px;
+	border: 2px solid black;
+	border-radius: 100px;
+	font-size: 20px;
+	background-color: hsl(180, 78%, 45%);
+	transition: background-color 2s;
+	transition: width 1s;
+	transition: height 1s;
+}
+#viewImage:hover{
+	background-color: rgb(12, 133, 189);
+	width: 250px;
+	height: 150px;
+	cursor: pointer;
+}
