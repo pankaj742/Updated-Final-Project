@@ -30,6 +30,8 @@ function setUser(user){
     if(currentUser != null){
         initialLoadMessages();
         fetchMessages();
+        document.getElementsByName(currentUser)[0].setAttribute("class","currentUser");
+        document.getElementsByName(currentUser)[0].setAttribute("id","");
     }else{
         alert("user does not exists");
     }
@@ -45,13 +47,19 @@ function fetchUsers(){
                 }
                 var user=document.createElement('div');
                 user.id="userId";
+                user.setAttribute("name",change.doc.data()["user"]);
                 user.tabIndex="1";
                 user.onclick=function(){
                     // user.style.backgroundColor="#fc23a5";
+                    if(currentUser != ""){
+                        document.getElementsByName(currentUser)[0].setAttribute("class","");
+                        document.getElementsByName(currentUser)[0].setAttribute("id","userId");
+                    }
                     setUser(change.doc.data()["user"]);
                 }
                 user.innerHTML=change.doc.data()["user"];
-                currentUser=change.doc.data()["user"];
+                
+                // currentUser=change.doc.data()["user"];
                 userList.appendChild(user);
                 user.focus({preventScroll: false});
                 user.click();

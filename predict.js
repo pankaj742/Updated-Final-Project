@@ -1,13 +1,4 @@
-var config = {
-    apiKey: "AIzaSyCtf5dlViJYXWBeoo2yHfTI8vjY2m4wzJI",
-    authDomain: "camera-app-ecf92.firebaseapp.com",
-    databaseURL: "https://camera-app-ecf92.firebaseio.com",
-    projectId: "camera-app-ecf92",
-    storageBucket: "camera-app-ecf92.appspot.com",
-    messagingSenderId: "902166638398"
-};
-firebase.initializeApp(config);
-var db=firebase.firestore();
+
  $(document).ready()
 {
   $('.progress-bar').hide();
@@ -1163,15 +1154,13 @@ data["array"].push("tshirt fabric");
    
 } 
 
-
-
-
-
+sessionStorage.setItem("data",JSON.stringify(data));
+window.location="generate_result.html";
 
 
 
 console.log(data);
-generateResult(sessionStorage.getItem("url"));
+
 
 
 
@@ -1212,176 +1201,6 @@ function preprocessImage(image,modelName)
     }
 }
 
-
-async function generateResult(_url){
-    var canvas=document.createElement('canvas');
-	canvas.width="720";
-	canvas.height="1080";
-	canvas.style="border:2px solid black;margin: 0px 0px 0px 300px;";
-	var ctx = canvas.getContext('2d');
-
-	var tablestyle="background-color: #4bc16d;margin: auto;border: 1px solid black;width:720px;";
-	var tdstyle="font-size: 40px;font-style: italic;font-family: arial;color: black;text-align: center;width: 300px;border: 1px solid black;";
-	var trstyle="height:100px;";
-    // var url='hompage.png';
-    var resultString="";
-    var arr=data["array"];
-    for(i=0;i<arr.length;i++){
-        resultString +='<tr style="'+trstyle+'"><td colspan="2" style="'+tdstyle+'">'+arr[i]+' : '+data[arr[i]]+'</td></tr>';
-    }
-    console.log(resultString);
-    var url=_url;
-	var _data= '<svg  xmlns="http://www.w3.org/2000/svg" width="720" height="1080">'+
-				'<foreignObject width="100%" height="100%">'+
-				'<div xmlns="http://www.w3.org/1999/xhtml">'+
-                '<table style="'+tablestyle+'"><tr style="'+trstyle+'"><th style="'+tdstyle+'">Attribute</th><th style="'+tdstyle+'">Predicted Value</th></tr>'+
-                resultString+
-                '</table>'+
-				'</div>'+
-				'</foreignObject>'+
-				'</svg>';
-	    
-	 _data = await encodeURIComponent(_data);
-
-	 console.log("after encode");
-    var img = new Image();
-    var _blob;
-
-	 img.onload = function() {
-	  var displayimg=new Image();
-	  displayimg.width="200";
-	  displayimg.height="200";
-	  displayimg.crossOrigin="anonymous";
-	  displayimg.src=url;
-	  displayimg.onload=function(){
-	  	ctx.drawImage(displayimg,300,0,200,200);
-
-	  		  ctx.drawImage(img, 0, 200);
-
-	  console.log(canvas.toDataURL());
-	  canvas.toBlob(function(blob) {
-	     var newImg = document.createElement('img'),
-	     url = URL.createObjectURL(blob);
-
-	     newImg.onload = function() {
-	     // no longer need to read the blob so it's revoked
-         URL.revokeObjectURL(url);
-         uploadResult(blob,_url);
-        //  console.log(blob);
-        //  return blob;
-	   };
-
-	   newImg.src = url;
-    //    document.body.appendChild(newImg);
-	 });
-	  }
-
-	}
-
-    img.src = "data:image/svg+xml," + _data;
-	// document.body.appendChild(img);
-	console.log("hi");
-}
-function uploadResult(blob,targetUrl){
-    if(blob != null){
-        var file = blob;
-        console.log(blob);
-        var body= document.getElementById("body");
-        var storageRef = firebase.storage().ref();
-        var db=firebase.firestore();
-        // Create the file metadata
-        var metadata = {
-          contentType: 'image/jpeg'
-        };
-        var progressBar=document.createElement("progress");
-        var text=document.createTextNode("uploading");
-        progressBar.appendChild(text);
-        progressBar.style.border="2px solid black";
-        progressBar.max=100.0;
-        progressBar.style.position="fixed";
-        progressBar.style.top="100px";
-        progressBar.style.left="500px";
-        progressBar.style.width="400px";
-        progressBar.style.height="100px";
-        progressBar.style.zIndex="1";
-        body.appendChild(progressBar);
-        // Upload file and metadata to the object 'images/mountains.jpg'
-        // var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
-        var uploadTask = storageRef.child("results/"+new Date()+".jpg").put(file, metadata);
-
-
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-          function(snapshot) {
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            progressBar.value=progress;
-            switch (snapshot.state) {
-              case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-              case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            }
-          }, function(error) {
-
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
-          switch (error.code) {
-            case 'storage/unauthorized':
-              // User doesn't have permission to access the object
-              break;
-
-            case 'storage/canceled':
-              // User canceled the upload
-              break;
-
-            case 'storage/unknown':
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
-        }, function() {
-            var docId;
-          // Upload completed successfully, now we can get the download URL
-          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-            alert('Result has been generated sucesfully and saved to database ');
-            window.open(downloadURL);
-            db.collection("image").where("url", "==", targetUrl)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                    console.log(doc);
-                    doc.ref.update({
-                        "result_url":downloadURL 
-                    });
-                    docId=doc.id;
-                    console.log("result added to image");
-                    console.log(doc.id, " => ", doc.data());
-                });
-            })
-            .catch(function(error) {
-                console.log("Error getting documents: ", error);
-            });
-            db.collection("results").add({
-                    tag: "result",
-                    id : uploadTask.snapshot.ref.location.path,
-                    url: downloadURL
-            }).then(function(doc){
-                db.collection("activity").add({
-                    info:"new Result added of image: "+docId+" result stored",
-                    timestamp: new Date()
-                });
-            });
-                console.log(uploadTask.snapshot.ref.location.path);
-            progressBar.style.display="none";
-            // document.getElementById("img").src="img-succ.png";
-          });
-        });
-    }
-}
 
 
 

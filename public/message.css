@@ -148,3 +148,20 @@
     background-color: rgb(59, 172, 119);
     cursor: pointer;
 }
+.currentUser{
+    background-color: darkcyan;
+    border: 2px solid grey;
+    height: 65px;
+    border-radius: 30px;
+    font-size: 29px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    margin-top: 8px;
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-top: 17px;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    /* background-color: beige; */
+    outline: 0px;
+}
